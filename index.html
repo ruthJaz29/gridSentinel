@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GridSentinel — AI Transformer Guardian</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f4f7fb;color:#172033}
+.app{display:flex;min-height:100vh}.side{width:240px;background:#101a2b;color:#fff;padding:24px 16px;position:fixed;inset:0 auto 0 0}
+.logo{font-size:22px;font-weight:800;margin:0 10px 35px}.logo span{color:#5eead4}
+.nav{padding:12px 14px;margin:6px 0;border-radius:10px;color:#aebbd0;font-size:14px}.nav.active{background:#1e304c;color:#fff}
+.main{margin-left:240px;width:calc(100% - 240px);padding:28px 34px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.top h1{margin:0;font-size:26px}.sub{color:#718096;font-size:13px;margin-top:5px}
+.status{background:#e8fff6;color:#087f5b;padding:9px 14px;border-radius:20px;font-size:13px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:#fff;border:1px solid #e5eaf1;border-radius:14px;padding:20px;box-shadow:0 4px 18px #17203308}
+.metric-title{color:#718096;font-size:12px;text-transform:uppercase;letter-spacing:.6px}.metric{font-size:28px;font-weight:800;margin:8px 0}.good{color:#0f9f70}.warn{color:#d88900}.bad{color:#d83b45}
+.middle{display:grid;grid-template-columns:1.65fr 1fr;gap:16px;margin-top:16px}.wide{min-height:330px}.card h3{margin:0 0 16px;font-size:16px}.chart{height:240px;position:relative}.chart svg{width:100%;height:100%}.legend{display:flex;gap:18px;font-size:12px;color:#718096}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:#2563eb}
+.health{display:flex;align-items:center;gap:22px}.ring{width:125px;height:125px;border-radius:50%;background:conic-gradient(#10b981 0 82%,#e8eef5 82%);display:grid;place-items:center}.ring:after{content:"";width:91px;height:91px;border-radius:50%;background:#fff;position:absolute}.ring b{position:relative;z-index:2;font-size:27px}.health-text{flex:1}.health-text strong{font-size:18px}.bar{height:8px;background:#edf1f6;border-radius:10px;overflow:hidden;margin:10px 0 16px}.fill{height:100%;background:#10b981;border-radius:10px}
+.ai{background:linear-gradient(135deg,#13233a,#1b3553);color:white}.ai .muted{color:#b8c6d8}.risk{font-size:34px;font-weight:800;color:#ffcc66}.pill{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#fff3d6;color:#9b6500}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{border:0;padding:9px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px}.btn.primary{background:#2563eb;color:#fff}.btn.safe{background:#dff8ef;color:#087f5b}.btn.danger{background:#ffe2e5;color:#b42332}
+.bottom{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-top:16px}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:12px 8px;border-bottom:1px solid #edf0f5}.badge{padding:4px 8px;border-radius:14px;font-size:11px;font-weight:700}.b-green{background:#e1f8ef;color:#087f5b}.b-yellow{background:#fff2d1;color:#956000}.b-red{background:#ffe2e5;color:#b42332}
+.alert{padding:12px;border-left:4px solid #f0a000;background:#fff9eb;border-radius:8px;margin-bottom:9px;font-size:12px}.alert.red{border-color:#d83b45;background:#fff0f1}.alert b{display:block;margin-bottom:3px}
+.footer{font-size:11px;color:#8a96a8;margin-top:18px}
+@media(max-width:900px){.side{width:70px}.logo{font-size:0}.logo span{font-size:20px}.nav{font-size:0}.main{margin-left:70px;width:calc(100% - 70px);padding:20px}.grid{grid-template-columns:repeat(2,1fr)}.middle,.bottom{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <div class="logo">Grid<span>Sentinel</span></div>
+  <div class="nav active">◉ Overview</div>
+  <div class="nav">▣ Transformer Fleet</div>
+  <div class="nav">⌁ Live Sensors</div>
+  <div class="nav">⚠ Alerts</div>
+  <div class="nav">◈ AI Predictions</div>
+  <div class="nav">⚙ Settings</div>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <div><h1>Transformer Intelligence Dashboard</h1><div class="sub">AI-powered monitoring & autonomous protection prototype</div></div>
+    <div class="status">● SYSTEM ONLINE</div>
+  </div>
+
+  <section class="grid">
+    <div class="card"><div class="metric-title">Transformer Health</div><div class="metric good" id="health">82%</div><div class="sub">DT-104 • Healthy</div></div>
+    <div class="card"><div class="metric-title">Failure Risk</div><div class="metric warn" id="risk">18%</div><div class="sub">Next 30-day forecast</div></div>
+    <div class="card"><div class="metric-title">Current Load</div><div class="metric" id="current">72%</div><div class="sub">Rated capacity</div></div>
+    <div class="card"><div class="metric-title">Predicted Failure</div><div class="metric" id="days">14–21d</div><div class="sub">AI early-warning window</div></div>
+  </section>
+
+  <section class="middle">
+    <div class="card wide">
+      <h3>Live Transformer Signals</h3>
+      <div class="chart">
+        <svg viewBox="0 0 800 240" preserveAspectRatio="none">
+          <g stroke="#e9edf3" stroke-width="1">
+            <line x1="0" y1="30" x2="800" y2="30"/><line x1="0" y1="80" x2="800" y2="80"/>
+            <line x1="0" y1="130" x2="800" y2="130"/><line x1="0" y1="180" x2="800" y2="180"/><line x1="0" y1="230" x2="800" y2="230"/>
+          </g>
+          <polyline id="line1" fill="none" stroke="#2563eb" stroke-width="3" points="0,150 70,142 140,145 210,125 280,132 350,115 420,120 490,98 560,108 630,88 700,95 800,78"/>
+          <polyline id="line2" fill="none" stroke="#f59e0b" stroke-width="3" points="0,185 70,178 140,181 210,170 280,174 350,160 420,165 490,150 560,155 630,142 700,147 800,135"/>
+        </svg>
+      </div>
+      <div class="legend"><span><i class="dot"></i>Current / Load trend</span><span><i class="dot" style="background:#f59e0b"></i>Temperature trend</span></div>
+    </div>
+
+    <div class="card ai">
+      <h3>AI Decision Engine</h3>
+      <div class="muted">Current operating state</div>
+      <div class="risk" id="aiRisk">LOW RISK</div>
+      <span class="pill" id="fault">Normal operation</span>
+      <p class="muted" id="reason">AI sees stable current, temperature and vibration patterns.</p>
+      <hr style="border:0;border-top:1px solid #38506d">
+      <div class="muted">Recommended action</div>
+      <strong id="recommendation">Continue monitoring</strong>
+      <div class="actions">
+        <button class="btn primary" onclick="simulateFault()">Simulate Fault</button>
+        <button class="btn safe" onclick="resetSystem()">Reset System</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom">
+    <div class="card">
+      <h3>Transformer Fleet</h3>
+      <table class="table">
+        <thead><tr><th>ID</th><th>Location</th><th>Health</th><th>Risk</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>DT-104</td><td>East Tambaram</td><td>82%</td><td>18%</td><td><span class="badge b-green">Healthy</span></td></tr>
+          <tr><td>DT-221</td><td>Selaiyur</td><td>67%</td><td>41%</td><td><span class="badge b-yellow">Degrading</span></td></tr>
+          <tr><td>DT-442</td><td>Camp Road</td><td>49%</td><td>73%</td><td><span class="badge b-yellow">High Risk</span></td></tr>
+          <tr><td>DT-721</td><td>Madampakam</td><td>31%</td><td>91%</td><td><span class="badge b-red">Critical</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Recent AI Alerts</h3>
+      <div class="alert"><b>DT-442 • Thermal anomaly</b>Temperature rising faster than learned baseline.</div>
+      <div class="alert red"><b>DT-721 • Critical risk</b>High failure probability. Maintenance priority recommended.</div>
+      <div class="alert"><b>DT-221 • Load imbalance</b>Abnormal phase loading detected.</div>
+    </div>
+  </section>
+
+  <div class="footer">Prototype simulation • Sensor values are simulated for demonstration. In deployment, replace the simulator with ESP32/LoRa/MQTT sensor data.</div>
+</main>
+</div>
+
+<script>
+let fault=false, t=0;
+const $=id=>document.getElementById(id);
+
+function simulateFault(){
+  fault=true;
+  $("health").textContent="29%"; $("health").className="metric bad";
+  $("risk").textContent="94%"; $("risk").className="metric bad";
+  $("current").textContent="96%"; $("days").textContent="< 24h";
+  $("aiRisk").textContent="CRITICAL RISK"; $("aiRisk").style.color="#ff7b86";
+  $("fault").textContent="Thermal overload detected";
+  $("fault").style.background="#ffe2e5"; $("fault").style.color="#b42332";
+  $("reason").textContent="AI detected sustained high current combined with rapid temperature rise. Failure probability is now critical.";
+  $("recommendation").textContent="ISOLATE LOAD / DISPATCH ENGINEER";
+}
+function resetSystem(){
+  fault=false;
+  $("health").textContent="82%"; $("health").className="metric good";
+  $("risk").textContent="18%"; $("risk").className="metric warn";
+  $("current").textContent="72%"; $("days").textContent="14–21d";
+  $("aiRisk").textContent="LOW RISK"; $("aiRisk").style.color="#ffcc66";
+  $("fault").textContent="Normal operation"; $("fault").style.background="#fff3d6"; $("fault").style.color="#9b6500";
+  $("reason").textContent="AI sees stable current, temperature and vibration patterns.";
+  $("recommendation").textContent="Continue monitoring";
+}
+setInterval(()=>{
+  if(fault) return;
+  t++;
+  const load=70+Math.round(Math.sin(t/3)*3+Math.random()*4);
+  $("current").textContent=load+"%";
+},1800);
+</script>
+</body>
+</html>
