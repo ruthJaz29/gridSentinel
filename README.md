@@ -22,3 +22,9 @@ Suggested deployment:
 ESP32-S3 + current sensor + temperature sensor + vibration sensor -> Edge AI -> MQTT/LoRa -> backend -> dashboard.
 
 Note: all dashboard values in this prototype are simulated and are not real grid measurements.
+
+## Sample UI
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/616024bd-058a-47d3-a434-4121d9433109" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/176aaadc-85db-4efa-91b2-b16e6b2715b1" />
+
